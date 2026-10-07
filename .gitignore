@@ -218,3 +218,64 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+
+# ==========================================
+# Django
+# ==========================================
+# Bases de datos locales
+**/*.sqlite3
+**/*.sqlite3-journal
+**/*.db
+
+# Archivos estáticos y subidas (media)
+**/staticfiles/
+**/media/
+
+# Logs de Django
+**/django.log
+
+# ==========================================
+# Odoo
+# ==========================================
+# Filestore, sesiones y datos de runtime
+**/filestore/
+**/sessions/
+**/.local/share/Odoo/
+
+# Archivos de configuración locales (evitar subir contraseñas de BD y master password)
+**/odoo.conf
+**/openerp-server.conf
+!**/odoo.conf.example
+
+# Backups y volcados de base de datos
+**/*.dump
+**/*.sql
+**/*.backup
+**/*.tar.gz
+**/*.zip
+
+# Logs específicos de Odoo
+**/odoo.log
+**/odoo-server.log
+
+# ==========================================
+# IDEs, Editores y Sistema Operativo
+# ==========================================
+# VS Code
+**/.vscode/
+!**/.vscode/extensions.json
+
+# PyCharm / JetBrains
+**/.idea/
+
+# Vim y Nano
+**/*.swp
+**/*.swo
+**/*~
+
+# Archivos de sistema
+**/.DS_Store
+**/Thumbs.db
+**/ehthumbs.db
+**/desktop.ini

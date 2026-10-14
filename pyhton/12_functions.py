@@ -14,6 +14,9 @@ def calcular_combustible(inicial, consumo):
     restante = inicial - consumo
     return restante
 
+def nave_preparada(combustible):
+    return combustible >= 50
+
 
 
 activar_sistema()
@@ -22,3 +25,11 @@ saludar_jedi("Obi-Wan Kenobi")
 mostrar_nave("Caza N-1",80)
 resultado = calcular_combustible(85,63)
 print(f"Combustible: {resultado}")
+
+print(f"Combustible: {calcular_combustible(100,15)}")
+
+
+if nave_preparada(80):
+    print("Nave autorizada para despegue")
+else:
+    print("Nave necesita recarga")

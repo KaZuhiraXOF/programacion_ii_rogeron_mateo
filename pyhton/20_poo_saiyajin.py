@@ -9,3 +9,8 @@ class Saiyajin(Guerrero):
 
     def transformarse(self):
         print(f"{self.nombre} alcanzò la forma del Super SaiyajiSSSn")
+
+
+goku = Saiyajin("Goku")
+goku.presentarse()
+goku.transformarse()

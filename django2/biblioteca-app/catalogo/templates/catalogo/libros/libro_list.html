@@ -18,6 +18,41 @@
         <button><a href="{% url 'libro_create' %}">
             Crear libro
         </a></button>
+        <button><a href="{% url 'home' %}">
+            Volver al inicio
+        </a></button>
+        <h2>Buscar Libros</h2>
+        <form method="GET">
+            <p>
+                <label for="pista">
+                    Buscar por título, autor o categoría:
+                </label>
+                <input 
+                type="text" 
+                id = "pista" 
+                name="pista"
+                value="{{ pista }}">
+            </p>
+            <p>
+                <label for="categoria">
+                    Filtrar por categoría:
+                </label>
+                <select id="categoria" name="categoria">
+                    <option value="">Todas las categorias</option>
+                    {% for categoria in categorias %}
+                        <option value="{{ categoria.id }}" {% if categoria.id|stringformat:"s" == categoria_id %}selected{% endif %}>
+                            {{ categoria.nombre }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </p>
+        </form>    
+
+        <button>
+            <a href="{% url 'categoria_list' %}">
+                Ir a Categorías
+            </a>
+        </button>
         <table border="1">
             <thead>
                 <tr>
@@ -35,7 +70,9 @@
                         <td>{{ libro.fecha_publicacion }}</td>
                         <td>
                             <a href="{% url 'libro_update' libro.pk %}">Editar</a>
+                            {%if perms.catalogo.delete_libro%}
                             <a href="{% url 'libro_delete' libro.pk %}">Eliminar</a>
+                            {% endif %}
                         </td>
                     </tr>
                 {% empty %}

@@ -24,5 +24,7 @@ urlpatterns = [
     path('catalogo/',
         include('catalogo.urls.libros_url')),
     path('',
-        include('catalogo.urls.home_urls'))
+        include('catalogo.urls.home_urls')),
+    path('cuentas/',
+        include('catalogo.urls.authentication_urls'))
 ]

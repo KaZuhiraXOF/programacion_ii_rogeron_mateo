@@ -21,6 +21,11 @@
         <button><a href="{% url 'home' %}">
             Volver al inicio
         </a></button>
+                <button>
+            <a href="{% url 'categoria_list' %}">
+                Ir a Categorías
+            </a>
+        </button>
         <h2>Buscar Libros</h2>
         <form method="GET">
             <p>
@@ -46,13 +51,8 @@
                     {% endfor %}
                 </select>
             </p>
+            <button type="submit">Buscar</button>
         </form>    
-
-        <button>
-            <a href="{% url 'categoria_list' %}">
-                Ir a Categorías
-            </a>
-        </button>
         <table border="1">
             <thead>
                 <tr>

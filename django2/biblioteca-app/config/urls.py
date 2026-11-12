@@ -26,5 +26,7 @@ urlpatterns = [
     path('',
         include('catalogo.urls.home_urls')),
     path('cuentas/',
-        include('catalogo.urls.authentication_urls'))
+        include('catalogo.urls.authentication_urls')),
+    path('catalogo/',
+        include('catalogo.urls.autor_urls')),
 ]

@@ -15,6 +15,7 @@
     <ul>
         <li><a href="{% url 'libro_list' %}">Libros</a></li>
         <li><a href="{% url 'categoria_list' %}">Categorías</a></li>
+        <li><a href="{% url 'autor_list' %}">Autores</a></li>
     </ul>
     <form action="{% url 'logout' %}" method="post" style="display: inline;">
         {% csrf_token %}

@@ -9,7 +9,7 @@ from catalogo.models.categoria import Categoria
 @permission_required('catalogo.view_libro', raise_exception=True)
 def libro_list(request):
     pista = request.GET.get('pista', '').strip()
-    categoria_id = request.GET.get('categoria_id', '').strip()
+    categoria_id = request.GET.get('categoria', '').strip()
     libros = Libro.objects.select_related('categoria').all()
     if pista:
         libros = libros.filter(
@@ -28,8 +28,7 @@ def libro_list(request):
         'categoria_id': categoria_id,
     }
     return render(request, 
-                'catalogo/libros/libro_list.html', 
-                {'libros': libros},
+                'catalogo/libros/libro_list.html',
                 contexto)
 
 @login_required

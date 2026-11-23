@@ -1,0 +1,15 @@
+{% extends 'nomina/base.html' %}
+
+{% block title %}{% if form.instance.pk %}Editar concepto{% else %}Crear concepto{% endif %}{% endblock %}
+
+{% block content %}
+<h2>{% if form.instance.pk %}Editar concepto salarial{% else %}Crear concepto salarial{% endif %}</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p>
+        <button type="submit">Guardar concepto</button>
+        <a href="{% url 'concepto_list' %}">Cancelar</a>
+    </p>
+</form>
+{% endblock %}

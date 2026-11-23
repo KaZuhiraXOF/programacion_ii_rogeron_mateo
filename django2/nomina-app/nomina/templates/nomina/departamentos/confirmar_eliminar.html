@@ -1,0 +1,15 @@
+{% extends 'nomina/base.html' %}
+
+{% block title %}Eliminar departamento{% endblock %}
+
+{% block content %}
+<h2>Eliminar departamento</h2>
+<p>¿Está seguro de que desea eliminar el departamento {{ departamento }}?</p>
+<form method="POST">
+    {% csrf_token %}
+    <p>
+        <button type="submit">Eliminar</button>
+        <a href="{{ departamento.get_absolute_url }}">Cancelar</a>
+    </p>
+</form>
+{% endblock %}

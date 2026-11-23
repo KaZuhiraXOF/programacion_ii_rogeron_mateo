@@ -1,0 +1,47 @@
+{% extends 'nomina/base.html' %}
+
+{% block title %}Detalle de concepto salarial{% endblock %}
+
+{% block content %}
+<h2>Detalle del concepto: {{ concepto.nombre }}</h2>
+
+<p>Tipo: {{ concepto.get_tipo_display }}</p>
+<p>Monto fijo: ${{ concepto.monto_fijo }}</p>
+<p>Es recurrente: {% if concepto.es_recurrente %}Sí{% else %}No{% endif %}</p>
+
+<h3>Roles de pago donde se aplica este concepto</h3>
+<table border="1" cellpadding="8">
+    <thead>
+        <tr>
+            <th>ID Rol</th>
+            <th>Empleado</th>
+            <th>Período</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for rol in concepto.roles_pago.all %}
+        <tr>
+            <td>{{ rol.id }}</td>
+            <td>{{ rol.empleado }}</td>
+            <td>{{ rol.periodo_inicio }} al {{ rol.periodo_fin }}</td>
+            <td><a href="{{ rol.get_absolute_url }}">Ver rol</a></td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">Este concepto no se ha aplicado en ningún rol.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p>
+    {% if perms.nomina.change_conceptosalarial %}
+        <button><a href="{% url 'concepto_update' concepto.id %}">Editar</a></button>
+    {% endif %}
+    {% if perms.nomina.delete_conceptosalarial %}
+        <button><a href="{% url 'concepto_delete' concepto.id %}">Eliminar</a></button>
+    {% endif %}
+    <button><a href="{% url 'concepto_list' %}">Volver al listado</a></button>
+</p>
+{% endblock %}

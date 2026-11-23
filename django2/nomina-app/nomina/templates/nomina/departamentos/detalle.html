@@ -1,0 +1,46 @@
+{% extends 'nomina/base.html' %}
+
+{% block title %}Detalle de departamento{% endblock %}
+
+{% block content %}
+<h2>Detalle del departamento: {{ departamento.nombre }}</h2>
+
+<p>Código: {{ departamento.codigo }}</p>
+<p>Ubicación: {{ departamento.ubicacion }}</p>
+
+<h3>Empleados asignados a este departamento</h3>
+<table border="1" cellpadding="8">
+    <thead>
+        <tr>
+            <th>Cédula</th>
+            <th>Empleado</th>
+            <th>Salario Base</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for emp in departamento.empleados.all %}
+        <tr>
+            <td>{{ emp.cedula }}</td>
+            <td>{{ emp.apellidos }} {{ emp.nombres }}</td>
+            <td>${{ emp.salario_base }}</td>
+            <td><a href="{{ emp.get_absolute_url }}">Ver empleado</a></td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No hay empleados asignados a este departamento.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p>
+    {% if perms.nomina.change_departamento %}
+        <button><a href="{% url 'departamento_update' departamento.id %}">Editar</a></button>
+    {% endif %}
+    {% if perms.nomina.delete_departamento %}
+        <button><a href="{% url 'departamento_delete' departamento.id %}">Eliminar</a></button>
+    {% endif %}
+    <button><a href="{% url 'departamento_list' %}">Volver al listado</a></button>
+</p>
+{% endblock %}

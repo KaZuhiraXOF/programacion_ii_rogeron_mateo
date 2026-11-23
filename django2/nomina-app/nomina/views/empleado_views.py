@@ -11,12 +11,12 @@ def _puede_gestionar_empleado(user, empleado):
     es_admin = user.groups.filter(name='administradores').exists() or user.is_superuser
     return es_admin or empleado.creado_por == user
 
-
+@login_required
 def empleado_list(request):
     empleados = Empleado.objects.select_related('departamento', 'creado_por').all()
     return render(request, 'nomina/empleados/lista.html', {'empleados': empleados})
 
-
+@login_required
 def empleado_detail(request, pk):
     empleado = get_object_or_404(Empleado.objects.select_related('departamento', 'creado_por'), pk=pk)
     puede_editar = request.user.is_authenticated and _puede_gestionar_empleado(request.user, empleado)

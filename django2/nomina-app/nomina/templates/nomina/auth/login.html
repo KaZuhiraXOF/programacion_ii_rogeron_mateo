@@ -1,0 +1,15 @@
+{% extends 'nomina/base.html' %}
+
+{% block title %}Iniciar sesión{% endblock %}
+
+{% block content %}
+<h2>Iniciar sesión</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p>
+        <button type="submit">Entrar</button>
+        <a href="{% url 'registro' %}">Crear cuenta</a>
+    </p>
+</form>
+{% endblock %}

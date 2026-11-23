@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistema de Nómina{% endblock %}</title>
+</head>
+<body>
+    <h1>Sistema de Nómina</h1>
+    <p>
+        <button><a href="{% url 'rol_list' %}">Roles de Pago</a></button>
+        <button><a href="{% url 'empleado_list' %}">Empleados</a></button>
+        <button><a href="{% url 'departamento_list' %}">Departamentos</a></button>
+        <button><a href="{% url 'concepto_list' %}">Conceptos Salariales</a></button>
+        {% if user.is_authenticated %}
+            Usuario: {{ user.username }}
+            <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Cerrar sesión</button>
+            </form>
+        {% else %}
+            <button><a href="{% url 'login' %}">Iniciar sesión</a></button>
+            <button><a href="{% url 'registro' %}">Registrarse</a></button>
+        {% endif %}
+    </p>
+    <hr>
+
+    {% if messages %}
+        {% for mensaje in messages %}
+            <p>{{ mensaje }}</p>
+        {% endfor %}
+        <hr>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+</body>
+</html>

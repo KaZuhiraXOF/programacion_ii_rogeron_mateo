@@ -20,12 +20,12 @@ def _calcular_totales(rol):
     rol.neto_a_pagar = rol.total_ingresos - rol.total_descuentos
     rol.save()
 
-
+@login_required
 def rol_list(request):
     roles = RolPago.objects.select_related('empleado', 'creado_por').prefetch_related('conceptos').all()
     return render(request, 'nomina/roles/lista.html', {'roles': roles})
 
-
+@login_required
 def rol_detail(request, pk):
     rol = get_object_or_404(
         RolPago.objects.select_related('empleado', 'empleado__departamento', 'creado_por').prefetch_related('conceptos'),

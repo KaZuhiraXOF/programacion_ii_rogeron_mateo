@@ -4,12 +4,12 @@ from django.contrib.auth.decorators import login_required, permission_required
 from nomina.models import ConceptoSalarial
 from nomina.forms import ConceptoSalarialForm
 
-
+@login_required
 def concepto_list(request):
     conceptos = ConceptoSalarial.objects.all()
     return render(request, 'nomina/conceptos/lista.html', {'conceptos': conceptos})
 
-
+@login_required
 def concepto_detail(request, pk):
     concepto = get_object_or_404(ConceptoSalarial, pk=pk)
     return render(request, 'nomina/conceptos/detalle.html', {'concepto': concepto})

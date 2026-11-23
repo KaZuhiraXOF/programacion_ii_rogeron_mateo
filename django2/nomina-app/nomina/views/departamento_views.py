@@ -5,12 +5,12 @@ from django.db.models import ProtectedError
 from nomina.models import Departamento
 from nomina.forms import DepartamentoForm
 
-
+@login_required
 def departamento_list(request):
     departamentos = Departamento.objects.all()
     return render(request, 'nomina/departamentos/lista.html', {'departamentos': departamentos})
 
-
+@login_required
 def departamento_detail(request, pk):
     departamento = get_object_or_404(Departamento, pk=pk)
     return render(request, 'nomina/departamentos/detalle.html', {'departamento': departamento})

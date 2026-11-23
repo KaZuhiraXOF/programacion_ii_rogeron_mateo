@@ -1,0 +1,15 @@
+{% extends 'nomina/base.html' %}
+
+{% block title %}{% if form.instance.pk %}Editar rol de pago{% else %}Crear rol de pago{% endif %}{% endblock %}
+
+{% block content %}
+<h2>{% if form.instance.pk %}Editar rol de pago{% else %}Crear rol de pago{% endif %}</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p>
+        <button type="submit">Guardar rol de pago</button>
+        <a href="{% url 'rol_list' %}">Cancelar</a>
+    </p>
+</form>
+{% endblock %}

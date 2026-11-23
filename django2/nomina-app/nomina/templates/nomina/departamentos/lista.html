@@ -1,0 +1,57 @@
+{% extends 'nomina/base.html' %}
+
+{% block title %}Listado de empleados{% endblock %}
+
+{% block content %}
+<h2>Listado de empleados</h2>
+
+<p>
+    {% if perms.nomina.add_empleado %}
+        <button><a href="{% url 'empleado_create' %}">Nuevo empleado</a></button>
+    {% endif %}
+    <button><a href="{% url 'rol_list' %}">Ir a Roles de Pago</a></button>
+    <button><a href="{% url 'departamento_list' %}">Ir a Departamentos</a></button>
+</p>
+
+<table border="1" cellpadding="8">
+    <thead>
+        <tr>
+            <th>Cédula</th>
+            <th>Apellidos y Nombres</th>
+            <th>Departamento</th>
+            <th>Salario Base</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for empleado in empleados %}
+        <tr>
+            <td>{{ empleado.cedula }}</td>
+            <td>{{ empleado.apellidos }} {{ empleado.nombres }}</td>
+            <td><a href="{{ empleado.departamento.get_absolute_url }}">{{ empleado.departamento.nombre }}</a></td>
+            <td>${{ empleado.salario_base }}</td>
+            <td>{{ empleado.get_estado_display }}</td>
+            <td>
+                <a href="{% url 'empleado_detail' empleado.id %}">Detalle</a>
+                {% if perms.nomina.change_empleado %}
+                    <a href="{% url 'empleado_update' empleado.id %}">Editar</a>
+                {% endif %}
+                {% if perms.nomina.delete_empleado %}
+                    <a href="{% url 'empleado_delete' empleado.id %}">Eliminar</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No existen empleados registrados.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6">Total de empleados: {{ empleados|length }}</td>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %}

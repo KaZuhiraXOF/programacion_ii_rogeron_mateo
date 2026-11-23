@@ -1,0 +1,53 @@
+{% extends 'nomina/base.html' %}
+
+{% block title %}Detalle de empleado{% endblock %}
+
+{% block content %}
+<h2>Detalle del empleado: {{ empleado.apellidos }} {{ empleado.nombres }}</h2>
+
+<p>Cédula: {{ empleado.cedula }}</p>
+<p>Correo: {{ empleado.correo }}</p>
+<p>Fecha de ingreso: {{ empleado.fecha_ingreso }}</p>
+<p>Salario base: ${{ empleado.salario_base }}</p>
+<p>Estado: {{ empleado.get_estado_display }}</p>
+<p>Departamento: <a href="{{ empleado.departamento.get_absolute_url }}">{{ empleado.departamento }}</a></p>
+<p>Registrado por: {{ empleado.creado_por.username }}</p>
+
+<h3>Roles de pago del empleado</h3>
+<table border="1" cellpadding="8">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Período</th>
+            <th>Neto a Pagar</th>
+            <th>Estado</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for rol in empleado.roles_pago.all %}
+        <tr>
+            <td>{{ rol.id }}</td>
+            <td>{{ rol.periodo_inicio }} al {{ rol.periodo_fin }}</td>
+            <td>${{ rol.neto_a_pagar }}</td>
+            <td>{{ rol.get_estado_pago_display }}</td>
+            <td><a href="{{ rol.get_absolute_url }}">Ver rol</a></td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Este empleado aún no tiene roles de pago.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p>
+    {% if puede_editar and perms.nomina.change_empleado %}
+        <button><a href="{% url 'empleado_update' empleado.id %}">Editar</a></button>
+    {% endif %}
+    {% if puede_editar and perms.nomina.delete_empleado %}
+        <button><a href="{% url 'empleado_delete' empleado.id %}">Eliminar</a></button>
+    {% endif %}
+    <button><a href="{% url 'empleado_list' %}">Volver al listado</a></button>
+</p>
+{% endblock %}

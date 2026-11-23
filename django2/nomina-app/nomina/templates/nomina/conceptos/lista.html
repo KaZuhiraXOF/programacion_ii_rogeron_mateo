@@ -1,0 +1,49 @@
+{% extends 'nomina/base.html' %}
+
+{% block title %}Listado de conceptos salariales{% endblock %}
+
+{% block content %}
+<h2>Listado de conceptos salariales</h2>
+
+<p>
+    {% if perms.nomina.add_conceptosalarial %}
+        <button><a href="{% url 'concepto_create' %}">Nuevo concepto</a></button>
+    {% endif %}
+    <button><a href="{% url 'rol_list' %}">Ir a Roles de Pago</a></button>
+</p>
+
+<table border="1" cellpadding="8">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Monto Fijo</th>
+            <th>Recurrente</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for concepto in conceptos %}
+        <tr>
+            <td>{{ concepto.nombre }}</td>
+            <td>{{ concepto.get_tipo_display }}</td>
+            <td>${{ concepto.monto_fijo }}</td>
+            <td>{% if concepto.es_recurrente %}Sí{% else %}No{% endif %}</td>
+            <td>
+                <a href="{% url 'concepto_detail' concepto.id %}">Detalle</a>
+                {% if perms.nomina.change_conceptosalarial %}
+                    <a href="{% url 'concepto_update' concepto.id %}">Editar</a>
+                {% endif %}
+                {% if perms.nomina.delete_conceptosalarial %}
+                    <a href="{% url 'concepto_delete' concepto.id %}">Eliminar</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No existen conceptos registrados.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'nomina/base.html' %}
+
+{% block title %}Detalle de rol de pago{% endblock %}
+
+{% block content %}
+<h2>Detalle del rol de pago #{{ rol.id }}</h2>
+
+<p>Empleado: <a href="{{ rol.empleado.get_absolute_url }}">{{ rol.empleado }}</a></p>
+<p>Departamento: <a href="{{ rol.empleado.departamento.get_absolute_url }}">{{ rol.empleado.departamento }}</a></p>
+<p>Período: {{ rol.periodo_inicio }} al {{ rol.periodo_fin }}</p>
+<p>Fecha de emisión: {{ rol.fecha_emision }}</p>
+<p>Salario base: ${{ rol.empleado.salario_base }}</p>
+<p>Total ingresos: ${{ rol.total_ingresos }}</p>
+<p>Total descuentos: ${{ rol.total_descuentos }}</p>
+<p>Neto a pagar: ${{ rol.neto_a_pagar }}</p>
+<p>Estado: {{ rol.get_estado_pago_display }}</p>
+<p>Creado por: {{ rol.creado_por.username }}</p>
+
+<h3>Conceptos salariales aplicados</h3>
+<table border="1" cellpadding="8">
+    <thead>
+        <tr>
+            <th>Concepto</th>
+            <th>Tipo</th>
+            <th>Monto</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for concepto in rol.conceptos.all %}
+        <tr>
+            <td><a href="{{ concepto.get_absolute_url }}">{{ concepto.nombre }}</a></td>
+            <td>{{ concepto.get_tipo_display }}</td>
+            <td>${{ concepto.monto_fijo }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">No hay conceptos aplicados.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p>
+    {% if puede_editar and perms.nomina.change_rolpago %}
+        <button><a href="{% url 'rol_update' rol.id %}">Editar</a></button>
+    {% endif %}
+    {% if puede_editar and perms.nomina.delete_rolpago %}
+        <button><a href="{% url 'rol_delete' rol.id %}">Eliminar</a></button>
+    {% endif %}
+    <button><a href="{% url 'rol_list' %}">Volver al listado</a></button>
+</p>
+{% endblock %}

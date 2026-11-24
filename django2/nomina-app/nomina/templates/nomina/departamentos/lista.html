@@ -1,57 +1,47 @@
 {% extends 'nomina/base.html' %}
 
-{% block title %}Listado de empleados{% endblock %}
+{% block title %}Listado de departamentos{% endblock %}
 
 {% block content %}
-<h2>Listado de empleados</h2>
+<h2>Listado de departamentos</h2>
 
 <p>
-    {% if perms.nomina.add_empleado %}
-        <button><a href="{% url 'empleado_create' %}">Nuevo empleado</a></button>
+    {% if perms.nomina.add_departamento %}
+        <button><a href="{% url 'departamento_create' %}">Nuevo departamento</a></button>
     {% endif %}
-    <button><a href="{% url 'rol_list' %}">Ir a Roles de Pago</a></button>
-    <button><a href="{% url 'departamento_list' %}">Ir a Departamentos</a></button>
+    <button><a href="{% url 'empleado_list' %}">Ir a Empleados</a></button>
 </p>
 
 <table border="1" cellpadding="8">
     <thead>
         <tr>
-            <th>Cédula</th>
-            <th>Apellidos y Nombres</th>
-            <th>Departamento</th>
-            <th>Salario Base</th>
-            <th>Estado</th>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Ubicación</th>
             <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-        {% for empleado in empleados %}
+        {% for departamento in departamentos %}
         <tr>
-            <td>{{ empleado.cedula }}</td>
-            <td>{{ empleado.apellidos }} {{ empleado.nombres }}</td>
-            <td><a href="{{ empleado.departamento.get_absolute_url }}">{{ empleado.departamento.nombre }}</a></td>
-            <td>${{ empleado.salario_base }}</td>
-            <td>{{ empleado.get_estado_display }}</td>
+            <td>{{ departamento.codigo }}</td>
+            <td>{{ departamento.nombre }}</td>
+            <td>{{ departamento.ubicacion }}</td>
             <td>
-                <a href="{% url 'empleado_detail' empleado.id %}">Detalle</a>
-                {% if perms.nomina.change_empleado %}
-                    <a href="{% url 'empleado_update' empleado.id %}">Editar</a>
+                <a href="{% url 'departamento_detail' departamento.id %}">Detalle</a>
+                {% if perms.nomina.change_departamento %}
+                    <a href="{% url 'departamento_update' departamento.id %}">Editar</a>
                 {% endif %}
-                {% if perms.nomina.delete_empleado %}
-                    <a href="{% url 'empleado_delete' empleado.id %}">Eliminar</a>
+                {% if perms.nomina.delete_departamento %}
+                    <a href="{% url 'departamento_delete' departamento.id %}">Eliminar</a>
                 {% endif %}
             </td>
         </tr>
         {% empty %}
         <tr>
-            <td colspan="6">No existen empleados registrados.</td>
+            <td colspan="4">No existen departamentos registrados.</td>
         </tr>
         {% endfor %}
     </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="6">Total de empleados: {{ empleados|length }}</td>
-        </tr>
-    </tfoot>
 </table>
 {% endblock %}
